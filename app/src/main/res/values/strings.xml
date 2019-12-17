@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Carte blanche\'2020</string>
+    <string name="make_an_order">Make an order</string>
+    <string name="dialog_title">Workshops available</string>
+    <string name="ok_label">OK</string>
+    <string name="dismiss_label">Dismiss</string>
+    <string name="clear_all_label">Clear all</string>
+
+    <string-array name="workshop_list">
+        <item>Block chain by DTCC</item>
+        <item>ML by google developers</item>
+        <item>Android Developement</item>
+        <item>Python and web developement</item>
+        <item>Ethical hacking</item>
+        <item>UAV drone</item>
+        <item>AI and IOT</item>
+        <item>Industry 4.0</item>
+        <item>hybrid and electical vehicles</item>
+        <item>Autronics</item>
+    </string-array>
+</resources>

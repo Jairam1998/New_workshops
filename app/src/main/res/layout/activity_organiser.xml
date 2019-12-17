@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".organiser"
+    android:background="@drawable/dark"
+    >
+
+
+    <ImageView
+        android:background="@drawable/white_mosiac"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="750dp" />
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="20dp"
+        android:id="@+id/org_result_text"
+        android:visibility="invisible"
+        />
+
+    <LinearLayout
+        android:id="@+id/layoutInput"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/back"
+        android:orientation="vertical"
+        android:padding="20dp" />
+
+    <Button
+        android:textColor="#FFF"
+        android:background="@drawable/rec_gradient"
+        android:layout_marginTop="240dp"
+        android:textAllCaps="false"
+        android:text="Register"
+        android:id="@+id/org_register"
+        android:layout_width="300dp"
+        android:onClick="register"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_height="60dp" />
+
+    <Button
+        android:textColor="#FFF"
+        android:background="@drawable/rec_gradient"
+        android:layout_marginTop="400dp"
+        android:textAllCaps="false"
+        android:onClick="scanQR"
+        android:text="SCAN QR"
+        android:id="@+id/org_scan"
+        android:layout_width="300dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="220dp"
+        android:layout_height="60dp" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="38dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/org_scan"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="94dp"
+        android:layout_marginEnd="192dp"
+        android:visibility="invisible" />
+
+
+
+
+</RelativeLayout>
