@@ -1,6 +1,5 @@
 package com.example.official;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class WorkshopsListAdapter extends ArrayAdapter<WorkshopListItem> {
+public class EventsListAdapter extends ArrayAdapter<EventListItem> {
 
     private int resourceLayout;
     private Context mContext;
 
-    public WorkshopsListAdapter(Context context, int resource, List<WorkshopListItem> items) {
+    public EventsListAdapter(Context context, int resource, List<EventListItem> items) {
         super(context, resource, items);
         this.resourceLayout = resource;
         this.mContext = context;
@@ -32,12 +31,12 @@ public class WorkshopsListAdapter extends ArrayAdapter<WorkshopListItem> {
             v = vi.inflate(resourceLayout, null);
         }
 
-        WorkshopListItem p = getItem(position);
+        EventListItem p = getItem(position);
 
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.name);
             TextView tt2 = (TextView) v.findViewById(R.id.orderID);
-            TextView tt3 = (TextView) v.findViewById(R.id.status);
+            //TextView tt3 = (TextView) v.findViewById(R.id.status);
 
             if (tt1 != null) {
                 tt1.setText(p.getName());
@@ -47,9 +46,10 @@ public class WorkshopsListAdapter extends ArrayAdapter<WorkshopListItem> {
                 tt2.setText(p.getOrderID());
             }
 
+            /*
             if (tt3 != null) {
                 tt3.setText(p.getStatus());
-            }
+            } */
         }
 
         return v;

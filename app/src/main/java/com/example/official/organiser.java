@@ -32,12 +32,6 @@ public class organiser extends AppCompatActivity {
 
         register = (Button)findViewById(R.id.org_register);
         scan = (Button)findViewById(R.id.org_scan);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Register_ws_events.class));
-            }
-        });
         textView = (TextView)findViewById(R.id.org_result_text);
 
         organizerId = getIntent().getIntExtra(Constants.INTENT_ORG_ID_NAME,-1);
@@ -71,19 +65,18 @@ public class organiser extends AppCompatActivity {
 
             if(resultCode == Activity.RESULT_OK){
 
-                String result = data.getStringExtra(Constants.INTENT_QR_CODE_NAME);
+                String id = data.getStringExtra(Constants.INTENT_QR_CODE_NAME);
 
                 //TODO remove this line once actual QR codes are available
-                //result = "CBW7282756";
+                //id = "CBW7282756";
 
-                if (result.charAt(0) == 'P') {
+                Log.d(Constants.LOGTAG,"SCANNED:"+id);
 
-                    //TODO handle scanning participant ID
-
-                } else {
-
-                    startWorkshopsViewActivity(result);
-                }
+                ProgressBar progressBar = findViewById(R.id.progressBar);
+                PostRequest request = new PostRequest(getResponseHandler(),progressBar,Constants.SERVICE_GET_DETAILS);
+                Properties postParams = new Properties();
+                postParams.put(Constants.REQUEST_ID_NAME,id);
+                request.execute(postParams);
 
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -92,46 +85,60 @@ public class organiser extends AppCompatActivity {
         }
     }
 
-    private void startWorkshopsViewActivity(String orderId) {
+    private PostResponseHandler getResponseHandler() {
 
-        PostResponseHandler handler = new PostResponseHandler() {
+        return  new PostResponseHandler() {
             @Override
             public void handlePostResponse(String response) {
 
-                Properties responseObj = null;
-                Log.d(Constants.LOGTAG,"JSONResponse: " + response);
-
                 try {
-                    responseObj = Utils.getJSONObject(new JSONObject(response));
-                    Intent intent = new Intent(getApplicationContext(),WorkshopsViewActivity.class);
 
-                    String participantDetails = responseObj.get(Constants.RESPONSE_PARTICIPANT_DETAILS_NAME).toString();
-                    intent.putExtra(Constants.INTENT_PARTICIPANT_DETAILS_NAME,participantDetails);
+                    String json = Utils.getDataJsonString(getApplicationContext(),response);
 
-                    String workshopsList = responseObj.get(Constants.RESPONSE_WORKSHOPS_LIST_NAME).toString();
-                    intent.putExtra(Constants.INTENT_WORKSHOP_LIST_NAME,workshopsList);
+                    if (json != null) {
 
-                    startActivity(intent);
+                        Properties obj = Utils.getJSONObject(new JSONObject(json));
+                        if (obj.get(Constants.RESPONSE_EVENT_LIST_NAME) != null) {
 
-                } catch (Exception e) { Log.e(Constants.LOGTAG,"Exception",e); }
+                            Intent intent = new Intent(getApplicationContext(),EventsViewActivity.class);
 
+                            String workshopsListJson = (String)obj.get(Constants.RESPONSE_EVENT_LIST_NAME);
+                            intent.putExtra(Constants.INTENT_WORKSHOP_LIST_NAME,workshopsListJson);
+                            Log.d(Constants.LOGTAG,workshopsListJson);
+
+                            String participantDetailsJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_DETAILS_NAME);
+                            intent.putExtra(Constants.INTENT_PARTICIPANT_DETAILS_NAME,participantDetailsJson);
+                            Log.d(Constants.LOGTAG,participantDetailsJson);
+
+                            startActivity(intent);
+
+                        } else {
+
+                            Intent intent = new Intent(getApplicationContext(),TempParticipantsViewActivity.class);
+
+                            String participantsListJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_LIST_NAME);
+                            intent.putExtra(Constants.INTENT_PARTICIPANT_LIST_NAME,participantsListJson);
+
+                            String workshopDetailsJson = (String)obj.get(Constants.RESPONSE_WORKSHOP_DETAILS_NAME);
+                            intent.putExtra(Constants.INTENT_WORKSHOP_DETAILS_NAME,workshopDetailsJson);
+                        }
+                    }
+
+                } catch (Exception e) {
+
+                    Log.e(Constants.LOGTAG,"Exception",e);
+                }
             }
         };
 
 
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        PostRequest request = new PostRequest(handler,progressBar,Constants.SERVICE_GET_DETAILS_BY_ORDER_ID);
-
-        Properties postParams = new Properties();
-        postParams.put(Constants.REQUEST_ORDER_ID_NAME,orderId);
-        request.execute(postParams);
-
     }
 
-    //private String getParticipantIdByOrderId
 
     public void register(View view) {
 
+        Intent intent = new Intent(getApplicationContext(),Register_ws_events.class);
+        startActivity(intent);
 
     }
 

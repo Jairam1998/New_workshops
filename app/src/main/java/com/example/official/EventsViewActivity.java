@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -15,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-public class WorkshopsViewActivity extends AppCompatActivity {
+public class EventsViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class WorkshopsViewActivity extends AppCompatActivity {
 
         String workshopsJsonString = getIntent().getStringExtra(Constants.INTENT_WORKSHOP_LIST_NAME);
         Log.d(Constants.LOGTAG,workshopsJsonString);
-        showWorkshopDetails(workshopsJsonString);
+        showEventsList(workshopsJsonString);
 
     }
 
@@ -64,38 +63,38 @@ public class WorkshopsViewActivity extends AppCompatActivity {
 
     }
 
-    private void showWorkshopDetails(String jsonString) {
+    private void showEventsList(String jsonString) {
 
         Log.d(Constants.LOGTAG,"JSONString: " + jsonString);
 
-        List <WorkshopListItem> workshopsList = null;
+        List <EventListItem> workshopsList = null;
 
         try {
-            workshopsList = getWorkshopsList(jsonString);
+            workshopsList = getEventsList(jsonString);
         } catch (Exception e) {
             Log.e("CarteBlanche","Exception",e);
         }
 
-        WorkshopsListAdapter workshopsListAdapter = new WorkshopsListAdapter(this,R.layout.workshop_list_item,workshopsList);
+        EventsListAdapter workshopsListAdapter = new EventsListAdapter(this,R.layout.workshop_list_item,workshopsList);
         ListView workshopsListView = findViewById(R.id.workshopsListView);
         workshopsListView.setAdapter(workshopsListAdapter);
     }
 
-    private List<WorkshopListItem> getWorkshopsList(String jsonString) throws Exception {
+    private List<EventListItem> getEventsList(String jsonString) throws Exception {
 
         List<Properties> workshops = Utils.getJSONObjects(jsonString);
-        List <WorkshopListItem> workshopsList = new LinkedList<>();
+        List <EventListItem> eventsList = new LinkedList<>();
 
         for (Properties workshop : workshops) {
 
-            String name = (String)workshop.get("workshopName");
-            String orderID = (String)workshop.get("orderID");
-            String status = (String)workshop.get("status");
-            WorkshopListItem model = new WorkshopListItem(name,orderID,status);
-            workshopsList.add(model);
+            String name = (String)workshop.get(Constants.DB_EVENT_NAME_NAME);
+            String orderID = (String)workshop.get(Constants.DB_ORDER_ID_NAME);
+
+            EventListItem model = new EventListItem(name,orderID);
+            eventsList.add(model);
         }
 
-        return workshopsList;
+        return eventsList;
 
     }
 }

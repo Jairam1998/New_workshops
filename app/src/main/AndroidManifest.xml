@@ -13,14 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register_ws_events"></activity>
+        <activity android:name=".TempParticipantsViewActivity"></activity>
+        <activity android:name=".Register_ws_events" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".organiser" />
         <activity android:name=".login" />
         <activity android:name=".scan_code_actual" />
         <activity android:name=".scan_code" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".WorkshopsViewActivity" />
+        <activity android:name=".EventsViewActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

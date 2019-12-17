@@ -82,7 +82,7 @@ public class login extends AppCompatActivity implements PostResponseHandler {
             Log.e(Constants.LOGTAG,"Exception",e);
         }
 
-        if (Constants.RESPONSE_LOGIN_SUCCESS_VALUE.equals(message)) {
+        if (Constants.RESPONSE_SUCCESS_VALUE.equals(message)) {
 
             Intent intent = new Intent(getApplicationContext(),organiser.class);
 

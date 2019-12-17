@@ -6,16 +6,21 @@
     <string name="dismiss_label">Dismiss</string>
     <string name="clear_all_label">Clear all</string>
 
-    <string-array name="workshop_list">
-        <item>Block chain by DTCC</item>
-        <item>ML by google developers</item>
-        <item>Android Developement</item>
-        <item>Python and web developement</item>
-        <item>Ethical hacking</item>
-        <item>UAV drone</item>
-        <item>AI and IOT</item>
-        <item>Industry 4.0</item>
-        <item>hybrid and electical vehicles</item>
-        <item>Autronics</item>
+    <string-array name="jan4_workshops">
+        <item>Free Placement Training Workshop (Jan 4) </item>
+        <item>Machine Learning by Google Developers (Jan 4) </item>
+        <item>Workshop on Python and Web Development (Jan 4)</item>
+        <item>Ethical Hacking by ZOHO (Jan 4)</item>
+        <item>UAV drone workshop (Jan 4)</item>
+        <item>Workshop on Hybrid and Electrical Vehicles(Jan 4)</item>
+        <item>Workshop on Autotronics (Jan 4)</item>
     </string-array>
+
+    <string-array name="jan5_workshops">
+        <item>Block Chain by DTCC (Jan 5) </item>
+        <item>Android Development by Google Developers(Jan 5)</item>
+        <item>Artificial intelligence with IOT (Jan 5)</item>
+        <item>Industry 4.0 (Jan 5)</item>
+    </string-array>
+
 </resources>

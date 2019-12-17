@@ -10,24 +10,33 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Register_ws_events extends AppCompatActivity {
     Button mOrder;
     TextView mItemSelected;
-    String[] listItems;
+    String[] listItems4, listItems5;
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
 
+    private boolean jan4Selected, jan5Selected;
+
+    private static final int [] jan4WorkshopList = {0,2,4,6,7,11,12};
+    private static final int [] jan5WorkshopList = {1,3,5,8,9,10};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        jan4Selected = jan5Selected = false;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_ws_events);
 
         mOrder = (Button) findViewById(R.id.btnOrder);
         mItemSelected = (TextView) findViewById(R.id.tvItemSelected);
 
-        listItems = getResources().getStringArray(R.array.workshop_list);//present at strings.xml
-        checkedItems = new boolean[listItems.length];
+        listItems4 = getResources().getStringArray(R.array.jan4_workshops);//present at strings.xml
+        checkedItems = new boolean[listItems4.length];
 
         mOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,17 +46,10 @@ public class Register_ws_events extends AppCompatActivity {
                 mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
-//                        if (isChecked) {
-//                            if (!mUserItems.contains(position)) {
-//                                mUserItems.add(position);
-//                            }
-//                        } else if (mUserItems.contains(position)) {
-//                            mUserItems.remove(position);
-//                        }
                         if(isChecked){
-                            mUserItems.add(position);
-                        }else{
                             mUserItems.remove((Integer.valueOf(position)));
+                        }else{
+                            mUserItems.add(position);
                         }
                     }
                 });
