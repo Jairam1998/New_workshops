@@ -19,6 +19,16 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -32,26 +42,52 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
     <TextView
         android:layout_marginTop="5dp"
         android:text="Enter Registered ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <EditText
-        android:drawablePadding="20dp"
-        android:drawableRight="@drawable/ic_person"
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_person"
+            android:drawablePadding="20dp" />
+
         <Button
-            android:id="@+id/btnOrder"
+            android:id="@+id/btnOrder4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:text="Workshops"
-            android:background="@drawable/rec_gradient"/>
+            android:background="@drawable/rec_gradient"
+            android:text="Workshops on Jan 4" />
+
+
+        <Button
+            android:id="@+id/btnOrder5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rec_gradient"
+            android:text="Workshops on Jan 5" />
+
+        <Button
+            android:id="@+id/btnEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rec_gradient"
+            android:text="Events" />
+
 
         <TextView
             android:id="@+id/tvItemSelected"
@@ -61,8 +97,19 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnGo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rec_gradient"
+            android:onClick="btnGO"
+            android:text="Go" />
 
     </LinearLayout>
 

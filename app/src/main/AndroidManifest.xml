@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TempParticipantsViewActivity"></activity>
+        <activity android:name=".TempParticipantsViewActivity" />
         <activity android:name=".Register_ws_events" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".organiser" />

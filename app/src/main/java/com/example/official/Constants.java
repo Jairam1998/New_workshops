@@ -26,10 +26,16 @@ public class Constants {
     public static final String SERVICE_BASE = "http://192.168.0.106/";
     public static final String SERVICE_GET_DETAILS = "getDetails.php";
     public static final String SERVICE_CHECK_LOGIN = "checkLogin.php";
+    public static final String SERVICE_PUT_DETAILS = "putDetails.php";
 
     public static final String REQUEST_USERNAME_NAME = "user";
     public static final String REQUEST_PASSWORD_NAME = "pass";
     public static final String REQUEST_ID_NAME = "id";
+    public static final String REQUEST_JAN4_WORKSHOP_ID_NAME = "jan4WorkshopId";
+    public static final String REQUEST_JAN5_WORKSHOP_ID_NAME = "jan5WorkshopId";
+    public static final String REQUEST_EVENT_ID_NAME = "eventId";
+    public static final String REQUEST_ORG_ID_NAME = "organizerId";
+    public static final String REQUEST_PARTICIPANT_ID_NAME = "participantId";
 
     public static final String RESPONSE_STATUS_NAME = "status";
     public static final String RESPONSE_MESSAGE_NAME = "message";

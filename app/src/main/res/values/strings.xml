@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Carte blanche\'2020</string>
     <string name="make_an_order">Make an order</string>
     <string name="dialog_title">Workshops available</string>
@@ -6,21 +7,70 @@
     <string name="dismiss_label">Dismiss</string>
     <string name="clear_all_label">Clear all</string>
 
-    <string-array name="jan4_workshops">
-        <item>Free Placement Training Workshop (Jan 4) </item>
-        <item>Machine Learning by Google Developers (Jan 4) </item>
-        <item>Workshop on Python and Web Development (Jan 4)</item>
-        <item>Ethical Hacking by ZOHO (Jan 4)</item>
-        <item>UAV drone workshop (Jan 4)</item>
-        <item>Workshop on Hybrid and Electrical Vehicles(Jan 4)</item>
-        <item>Workshop on Autotronics (Jan 4)</item>
+    <string name="jan4_workshops_title">Workshops on Jan 4</string>
+    <string name="jan5_workshops_title">Workshops on Jan 5</string>
+
+    <string-array name="jan4_workshop_names">
+        <item>Free Placement Training Workshop</item>
+        <item>Machine Learning by Google Developers</item>
+        <item>Workshop on Python and Web Development</item>
+        <item>Ethical Hacking by ZOHO</item>
+        <item>UAV drone workshop</item>
+        <item>Workshop on Hybrid and Electrical Vehicles</item>
+        <item>Workshop on Autotronics</item>
+        <item>None</item>
     </string-array>
 
-    <string-array name="jan5_workshops">
-        <item>Block Chain by DTCC (Jan 5) </item>
-        <item>Android Development by Google Developers(Jan 5)</item>
-        <item>Artificial intelligence with IOT (Jan 5)</item>
-        <item>Industry 4.0 (Jan 5)</item>
+    <integer-array name="jan4_workshop_ids">
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>7</item>
+        <item>11</item>
+        <item>12</item>
+    </integer-array>
+
+    <integer-array name="jan4_workshop_prices">
+        <item>0</item>
+        <item>930</item>
+        <item>826</item>
+        <item>826</item>
+        <item>620</item>
+        <item>723</item>
+        <item>723</item>
+    </integer-array>
+
+
+    <string-array name="jan5_workshop_names">
+        <item>Block Chain by DTCC</item>
+        <item>Android Development by Google Developers</item>
+        <item>Artificial intelligence with IOT</item>
+        <item>Industry 4.0</item>
+    </string-array>
+
+    <integer-array name="jan5_workshop_ids">
+        <item>1</item>
+        <item>3</item>
+        <item>8</item>
+        <item>9</item>
+    </integer-array>
+
+    <integer-array name="jan5_workshop_prices">
+        <item>826</item>
+        <item>930</item>
+        <item>826</item>
+        <item>723</item>
+    </integer-array>
+
+    <integer-array name="event_ids">
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+
+    <string-array name="event_names">
+        <item>Rolling Events</item>
+        <item>Paper Presentation</item>
     </string-array>
 
 </resources>

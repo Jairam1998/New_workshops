@@ -138,6 +138,7 @@ public class organiser extends AppCompatActivity {
     public void register(View view) {
 
         Intent intent = new Intent(getApplicationContext(),Register_ws_events.class);
+        intent.putExtra(Constants.INTENT_ORG_ID_NAME,organizerId);
         startActivity(intent);
 
     }

@@ -25,7 +25,8 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,10 +59,11 @@
         <EditText
             android:drawablePadding="20dp"
             android:drawableRight="@drawable/ic_person"
-            android:hint="******"
+            android:hint="Password"
             android:id="@+id/pin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/login"
