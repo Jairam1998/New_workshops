@@ -82,15 +82,16 @@ public class EventsViewActivity extends AppCompatActivity {
 
     private List<EventListItem> getEventsList(String jsonString) throws Exception {
 
-        List<Properties> workshops = Utils.getJSONObjects(jsonString);
+        List<Properties> events = Utils.getJSONObjects(jsonString);
         List <EventListItem> eventsList = new LinkedList<>();
 
-        for (Properties workshop : workshops) {
+        for (Properties event : events) {
 
-            String name = (String)workshop.get(Constants.DB_EVENT_NAME_NAME);
-            String orderID = (String)workshop.get(Constants.DB_ORDER_ID_NAME);
+            String name = (String)event.get(Constants.DB_EVENT_NAME_NAME);
+            String orderID = (String)event.get(Constants.DB_ORDER_ID_NAME);
+            String date = (String)event.get(Constants.DB_EVENT_DATE_NAME);
 
-            EventListItem model = new EventListItem(name,orderID);
+            EventListItem model = new EventListItem(name,orderID,date);
             eventsList.add(model);
         }
 

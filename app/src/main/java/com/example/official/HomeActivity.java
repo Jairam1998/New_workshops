@@ -20,7 +20,10 @@ public class HomeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),scan_code.class));
+                Intent intent = new Intent(getApplicationContext(),organiser.class);
+                intent.putExtra(Constants.INTENT_ORG_ID_NAME,-1);
+                intent.putExtra(Constants.INTENT_ORG_ACCESS_NAME,0);
+                startActivity(intent);
             }
         });
         organiser = (Button)findViewById(R.id.organiser);

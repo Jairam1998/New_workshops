@@ -10,6 +10,8 @@
     <string name="jan4_workshops_title">Workshops on Jan 4</string>
     <string name="jan5_workshops_title">Workshops on Jan 5</string>
 
+    <integer name="events_date">29</integer>
+
     <string-array name="jan4_workshop_names">
         <item>Free Placement Training Workshop</item>
         <item>Machine Learning by Google Developers</item>

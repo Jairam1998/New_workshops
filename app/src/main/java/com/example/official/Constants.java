@@ -9,6 +9,7 @@ public class Constants {
     public static final String DB_WORKSHOP_NAME_NAME = "workshopName";
     public static final String DB_ORDER_ID_NAME = "orderId";
     public static final String DB_EVENT_NAME_NAME = "eventName";
+    public static final String DB_EVENT_DATE_NAME = "eventDate";
 
     public static final String DB_PARTICIPANT_ID_NAME = "id";
     public static final String DB_PARTICIPANT_NAME_KEY = "Name";
@@ -49,6 +50,7 @@ public class Constants {
 
     public static final String RESPONSE_SUCCESS_VALUE = "SUCCESS";
     public static final String RESPONSE_FAILURE_VALUE = "FAILURE";
+    public static final String RESPONSE_NULL_VALUE = "null";
 
 
 }

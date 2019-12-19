@@ -36,7 +36,7 @@ public class EventsListAdapter extends ArrayAdapter<EventListItem> {
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.name);
             TextView tt2 = (TextView) v.findViewById(R.id.orderID);
-            //TextView tt3 = (TextView) v.findViewById(R.id.status);
+            TextView tt3 = (TextView) v.findViewById(R.id.status);
 
             if (tt1 != null) {
                 tt1.setText(p.getName());
@@ -46,10 +46,10 @@ public class EventsListAdapter extends ArrayAdapter<EventListItem> {
                 tt2.setText(p.getOrderID());
             }
 
-            /*
+
             if (tt3 != null) {
-                tt3.setText(p.getStatus());
-            } */
+                tt3.setText(p.getDate().toString());
+            }
         }
 
         return v;
