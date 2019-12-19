@@ -121,6 +121,8 @@ public class organiser extends AppCompatActivity {
 
                             String workshopDetailsJson = (String)obj.get(Constants.RESPONSE_WORKSHOP_DETAILS_NAME);
                             intent.putExtra(Constants.INTENT_WORKSHOP_DETAILS_NAME,workshopDetailsJson);
+
+                            startActivity(intent);
                         }
                     }
 

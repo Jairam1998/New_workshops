@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
-        android:id="@+id/participantDetails">
+        android:id="@+id/workshopDetails">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/workshopName"
             android:layout_width="match_parent"
             android:fontFamily="sans-serif"
             android:textSize="24dp"
@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/workshopDate"
             android:layout_width="match_parent"
             android:fontFamily="sans-serif"
             android:textSize="24dp"

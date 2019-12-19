@@ -6,15 +6,16 @@ public class Constants {
     public static final String LOGTAG = "CarteBlanche";
 
     public static final String DB_WORKSHOP_ID_NAME = "workshopId";
-    public static final String DB_WORKSHOP_NAME_NAME = "workshopName";
+    public static final String DB_WORKSHOP_NAME_NAME = "Name";
+    public static final String DB_WORKSHOP_DATE_NAME = "Date";
     public static final String DB_ORDER_ID_NAME = "orderId";
     public static final String DB_EVENT_NAME_NAME = "eventName";
     public static final String DB_EVENT_DATE_NAME = "eventDate";
 
     public static final String DB_PARTICIPANT_ID_NAME = "id";
-    public static final String DB_PARTICIPANT_NAME_KEY = "Name";
-    public static final String DB_PARTICIPANT_COLLEGE_KEY = "College";
-    public static final String DB_PARTICIPANT_EMAIL_KEY = "Email";
+    public static final String DB_PARTICIPANT_NAME_NAME = "Name";
+    public static final String DB_PARTICIPANT_COLLEGE_NAME = "College";
+    public static final String DB_PARTICIPANT_EMAIL_NAME = "Email";
 
     public static final String INTENT_PARTICIPANT_DETAILS_NAME = "participantDetailsJson";
     public static final String INTENT_WORKSHOP_LIST_NAME = "workshopListJson";
@@ -24,6 +25,7 @@ public class Constants {
     public static final String INTENT_ORG_ID_NAME = "organizerId";
     public static final String INTENT_QR_CODE_NAME = "qrCode";
 
+    //public static final String SERVICE_BASE = "http://cb.csmit.org/apk/";
     public static final String SERVICE_BASE = "http://192.168.0.106/";
     public static final String SERVICE_GET_DETAILS = "getDetails.php";
     public static final String SERVICE_CHECK_LOGIN = "checkLogin.php";

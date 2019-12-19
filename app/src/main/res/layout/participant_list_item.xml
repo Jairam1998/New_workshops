@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <TextView android:textColor="#FFFFFF"
-            android:id="@+id/name"
+            android:id="@+id/participantName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="id" android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:layout_width="fill_parent">
 
         <TextView android:textColor="#FFFFFF"
-            android:id="@+id/email"
+            android:id="@+id/participantEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="categoryId"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:textColor="#FFFFFF"
             android:gravity="right"
-            android:id="@+id/college"
+            android:id="@+id/participantCollege"
             android:text="description"
             android:height="20sp" />
 
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:textColor="#FFFFFF"
             android:gravity="right"
-            android:id="@+id/id"
+            android:id="@+id/participantId"
             android:text="description"
             android:height="20sp" />
 

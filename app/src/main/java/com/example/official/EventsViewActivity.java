@@ -44,15 +44,15 @@ public class EventsViewActivity extends AppCompatActivity {
 
             View parentView = findViewById(R.id.participantDetails);
 
-            String name = participant.get(Constants.DB_PARTICIPANT_NAME_KEY).toString();
+            String name = participant.get(Constants.DB_PARTICIPANT_NAME_NAME).toString();
             TextView nameView = parentView.findViewById(R.id.name);
             nameView.setText(name);
 
-            String college = participant.get(Constants.DB_PARTICIPANT_COLLEGE_KEY).toString();
+            String college = participant.get(Constants.DB_PARTICIPANT_COLLEGE_NAME).toString();
             TextView collegeView = parentView.findViewById(R.id.college);
             collegeView.setText(college);
 
-            String email = participant.get(Constants.DB_PARTICIPANT_EMAIL_KEY).toString();
+            String email = participant.get(Constants.DB_PARTICIPANT_EMAIL_NAME).toString();
             TextView emailView = parentView.findViewById(R.id.email);
             emailView.setText(email);
 

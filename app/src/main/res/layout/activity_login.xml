@@ -59,7 +59,6 @@
         <EditText
             android:drawablePadding="20dp"
             android:drawableRight="@drawable/ic_person"
-            android:hint="Password"
             android:id="@+id/pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

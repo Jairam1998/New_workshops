@@ -34,10 +34,10 @@ public class ParticipantListAdapter extends ArrayAdapter<ParticipantListItem> {
         ParticipantListItem p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.name);
-            TextView tt2 = (TextView) v.findViewById(R.id.email);
-            TextView tt3 = (TextView) v.findViewById(R.id.college);
-            TextView tt4 = (TextView) v.findViewById(R.id.id);
+            TextView tt1 = v.findViewById(R.id.participantName);
+            TextView tt2 = v.findViewById(R.id.participantEmail);
+            TextView tt3 = v.findViewById(R.id.participantCollege);
+            TextView tt4 = v.findViewById(R.id.participantId);
 
             if (tt1 != null) {
                 tt1.setText(p.getName());
@@ -48,11 +48,11 @@ public class ParticipantListAdapter extends ArrayAdapter<ParticipantListItem> {
             }
 
             if (tt3 != null) {
-                tt3.setText(p.getCollege().toString());
+                tt3.setText(p.getCollege());
             }
 
             if (tt4 != null) {
-                tt3.setText(p.getId().toString());
+                tt4.setText(p.getId());
             }
         }
 

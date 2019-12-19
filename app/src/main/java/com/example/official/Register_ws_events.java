@@ -4,9 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +18,6 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -107,7 +103,7 @@ public class Register_ws_events extends AppCompatActivity {
                                     mGo.setEnabled(false);
                                 } else {
                                     Properties participant = Utils.getJSONObject(new JSONObject(participantDetailsJson));
-                                    String email = (String)participant.get(Constants.DB_PARTICIPANT_EMAIL_KEY);
+                                    String email = (String)participant.get(Constants.DB_PARTICIPANT_EMAIL_NAME);
                                     textView.setText(email);
                                     mGo.setEnabled(true);
                                 }
@@ -297,6 +293,12 @@ public class Register_ws_events extends AppCompatActivity {
 
                     String message = (String)responseObj.get(Constants.RESPONSE_MESSAGE_NAME);
                     String status = (String)responseObj.get(Constants.RESPONSE_STATUS_NAME);
+
+                    if (Constants.RESPONSE_SUCCESS_VALUE.equals(status)) {
+                        if (jan4Selected != -1) mOrder4.setEnabled(false);
+                        if (jan5Selected != -1) mOrder5.setEnabled(false);
+                        if (eventSelected != -1) mEvent.setEnabled(false);
+                    }
 
                     Toast.makeText(getApplicationContext(),status + "! " + message,Toast.LENGTH_SHORT).show();
 
