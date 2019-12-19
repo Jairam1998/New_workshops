@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class TempParticipantsViewActivity extends AppCompatActivity {
+public class BulkWorkshopViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_temp_participants_view);
+        setContentView(R.layout.activity_bulk_workshop_view);
     }
 }
