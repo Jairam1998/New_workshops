@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".BulkWorkshopViewActivity"></activity>
         <activity android:name=".TempParticipantsViewActivity" />
         <activity android:name=".Register_ws_events" />
         <activity android:name=".SearchActivity" />

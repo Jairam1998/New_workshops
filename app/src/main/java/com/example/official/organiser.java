@@ -114,7 +114,7 @@ public class organiser extends AppCompatActivity {
 
                         } else {
 
-                            Intent intent = new Intent(getApplicationContext(),TempParticipantsViewActivity.class);
+                            Intent intent = new Intent(getApplicationContext(),BulkWorkshopViewActivity.class);
 
                             String participantsListJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_LIST_NAME);
                             intent.putExtra(Constants.INTENT_PARTICIPANT_LIST_NAME,participantsListJson);
