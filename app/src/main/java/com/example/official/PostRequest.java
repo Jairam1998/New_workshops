@@ -41,24 +41,33 @@ public class PostRequest extends AsyncTask <Properties,Integer,String> {
     protected void onPostExecute(String response) {
 
         super.onPostExecute(response);
-        progressBar.setVisibility(View.INVISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
         handler.handlePostResponse(response);
     }
 
     protected void onPreExecute() {
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
 
     protected void onProgressUpdate(Integer...progress) {
-        progressBar.setProgress(progress[0]);
+        if (progressBar != null) {
+            progressBar.setProgress(progress[0]);
+        }
     }
 
 
     protected String doInBackground(Properties...args) {
 
         String requestUrl = Constants.SERVICE_BASE + service;
-        return performPostCall(requestUrl,args[0]);
+        Properties params;
+        if (args.length > 0) params = args[0];
+        else params = null;
+        return performPostCall(requestUrl,params);
     }
 
     private String  performPostCall(String requestURL,
@@ -108,16 +117,19 @@ public class PostRequest extends AsyncTask <Properties,Integer,String> {
     private String getPostDataString(Properties params) throws UnsupportedEncodingException {
 
         StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Properties.Entry entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
+        if (params != null) {
 
-            result.append(URLEncoder.encode(entry.getKey().toString(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));
+            boolean first = true;
+            for (Properties.Entry entry : params.entrySet()) {
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                result.append(URLEncoder.encode(entry.getKey().toString(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));
+            }
         }
 
         return result.toString();

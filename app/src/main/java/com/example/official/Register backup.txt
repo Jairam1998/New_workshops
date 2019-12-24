@@ -1,0 +1,452 @@
+package com.example.official;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.CheckBoxPreference;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+public class Register_ws_events extends AppCompatActivity {
+
+    private Properties curParticipant;
+
+    private AutoSuggestAdapter autoSuggestAdapter;
+    private Handler handler;
+
+    private boolean ticket;
+
+    private static final int TRIGGER_AUTO_COMPLETE = 100;
+    private static final int AUTO_COMPLETE_DELAY = 300;
+
+    private String [] jan4WorkshopNames, jan5WorkshopNames;
+    private int [] jan4WorkshopIds, jan5WorkshopIds;
+    private int [] jan4WorkshopPrices, jan5WorkshopPrices;
+
+    private int jan4SelectedId, jan5SelectedId;
+    private String jan4SelectedName, jan5SelectedName;
+    private int jan4SelectedPrice, jan5SelectedPrice;
+
+    private int organizerId;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register_ws_events);
+
+        disableAll();
+
+        initConstants();
+        reset();
+
+        setupTicketCheckbox();
+        setupAutocompleteEditText();
+        createMessageHandler();
+
+    }
+
+    private void initConstants() {
+
+        organizerId = getIntent().getIntExtra(Constants.INTENT_ORG_ID_NAME,-1);
+
+        jan4WorkshopNames = getResources().getStringArray(R.array.jan4_workshop_names);
+        jan4WorkshopIds = getResources().getIntArray(R.array.jan4_workshop_ids);
+        jan4WorkshopPrices = getResources().getIntArray(R.array.jan4_workshop_prices);
+
+        jan5WorkshopNames = getResources().getStringArray(R.array.jan5_workshop_names);
+        jan5WorkshopIds = getResources().getIntArray(R.array.jan5_workshop_ids);
+        jan5WorkshopPrices = getResources().getIntArray(R.array.jan5_workshop_prices);
+
+    }
+
+    private void reset() {
+
+        ticket = false;
+        curParticipant = null;
+        CheckBox checkBox = findViewById(R.id.ticketCheckBox);
+        checkBox.setChecked(false);
+
+        resetJan4();
+        resetJan5();
+        showChosenEvents();
+    }
+
+    private void resetJan4() {
+        jan4SelectedId = -1;
+        jan4SelectedName = "";
+        jan4SelectedPrice = 0;
+    }
+
+    private void resetJan5() {
+        jan5SelectedId = -1;
+        jan5SelectedName = "";
+        jan5SelectedPrice = 0;
+    }
+
+    private void showChosenEvents() {
+
+        String tmp = "";
+        int sum = 0;
+        if (jan4SelectedName.length() > 0) tmp += jan4SelectedName + " (" + jan4SelectedPrice + ")\n";
+        if (jan5SelectedName.length() > 0) tmp += jan5SelectedName + " (" + jan5SelectedPrice + ")\n";
+        if (ticket) {
+            tmp += "Event Ticket (";
+            String college = (String)curParticipant.get(Constants.DB_PARTICIPANT_COLLEGE_NAME);
+            int price;
+            if ("MIT".equals(college)) price = 150;
+            else price = 250;
+            tmp += price + ")\n";
+            sum += price;
+        }
+        if (tmp.length() > 0) {
+            sum += jan4SelectedPrice + jan5SelectedPrice;
+            tmp += "Total (" + sum + ")";
+        }
+        TextView textView = findViewById(R.id.tvItemSelected);
+        textView.setText(tmp);
+    }
+
+    private void setupTicketCheckbox() {
+
+        CheckBox checkBox = findViewById(R.id.ticketCheckBox);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                ticket = checked;
+                showChosenEvents();
+            }
+        });
+    }
+
+    private void setupAutocompleteEditText() {
+
+        autoSuggestAdapter = new AutoSuggestAdapter(getApplicationContext(),android.R.layout.simple_dropdown_item_1line);
+        autoSuggestAdapter.setData(new ArrayList<String>());
+
+        final AppCompatAutoCompleteTextView editText = findViewById(R.id.participantEmail);
+        editText.setAdapter(autoSuggestAdapter);
+        editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = autoSuggestAdapter.getItem(position);
+                editText.setText(selectedItem);
+                findViewById(R.id.btnGo).setEnabled(true);
+                PostResponseHandler handler = new PostResponseHandler() {
+                    @Override
+                    public void handlePostResponse(String response) {
+                        try {
+                            String json = Utils.getDataJsonString(getApplicationContext(),response);
+                            Properties obj = Utils.getJSONObject(new JSONObject(json));
+                            String participantDetailsJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_DETAILS_NAME);
+                            String eventListJson = (String)obj.get(Constants.RESPONSE_EVENT_LIST_NAME);
+
+                            showParticipantDetails(participantDetailsJson);
+                            enableUnregisteredEvents(eventListJson);
+                            findViewById(R.id.btnGo).setEnabled(true);
+
+                        } catch (Exception e) {
+                            Log.e(Constants.LOGTAG,"Exception",e);
+                        }
+                    }
+                };
+                ProgressBar progressBar = findViewById(R.id.pProgressBar);
+                PostRequest request = new PostRequest(handler,progressBar,Constants.SERVICE_GET_DETAILS);
+                Properties postParams = new Properties();
+                postParams.put(Constants.REQUEST_ID_NAME,selectedItem);
+                request.execute(postParams);
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                findViewById(R.id.btnGo).setEnabled(false);
+                handler.removeMessages(TRIGGER_AUTO_COMPLETE);
+                handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
+                        AUTO_COMPLETE_DELAY);
+                curParticipant = null;
+                findViewById(R.id.btnGo).setEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+    }
+
+    private void showParticipantDetails(String json) throws Exception {
+
+        curParticipant = Utils.getJSONObject(new JSONObject(json));
+
+        String participantName = (String)curParticipant.get(Constants.DB_PARTICIPANT_NAME_NAME);
+        String participantCollege = (String)curParticipant.get(Constants.DB_PARTICIPANT_COLLEGE_NAME);
+
+        TextView textView = findViewById(R.id.participantDetails);
+        textView.setText(participantName + " (" + participantCollege + ")");
+
+    }
+
+    private void enableUnregisteredEvents(String json) throws Exception {
+
+        enableAll();
+
+        List <Properties> eventsList = Utils.getJSONObjects(json);
+
+        for (Properties event : eventsList) {
+            String dateString = (String)event.get(Constants.DB_EVENT_DATE_NAME);
+            int day = Integer.parseInt(dateString.substring(0,2));
+            if (day == 4) findViewById(R.id.btnJan4).setEnabled(false);
+            if (day == 5) findViewById(R.id.btnJan5).setEnabled(false);
+            if (day == Constants.ROLLING_EVENT_DATE_VALUE) findViewById(R.id.ticketCheckBox).setEnabled(false);
+        }
+    }
+
+    private void enableAll() {
+        findViewById(R.id.ticketCheckBox).setEnabled(true);
+        //findViewById(R.id.btnGo).setEnabled(true);
+        findViewById(R.id.btnJan5).setEnabled(true);
+        findViewById(R.id.btnJan4).setEnabled(true);
+    }
+
+    private void disableAll() {
+        findViewById(R.id.ticketCheckBox).setEnabled(false);
+        //findViewById(R.id.btnGo).setEnabled(false);
+        findViewById(R.id.btnJan5).setEnabled(false);
+        findViewById(R.id.btnJan4).setEnabled(false);
+    }
+
+    private void createMessageHandler() {
+
+        handler = new Handler(new Handler.Callback() {
+
+            public boolean handleMessage(Message message) {
+
+                if (message.what == TRIGGER_AUTO_COMPLETE) {
+
+                    PostResponseHandler handler = new PostResponseHandler() {
+                        @Override
+                        public void handlePostResponse(String response) {
+
+                            try {
+
+                                String emails = Utils.getDataJsonString(getApplicationContext(),response);
+                                List<String> emailStrings = new ArrayList<>();
+
+                                if (emails.length() > 0) {
+
+                                    List<Properties> tmp = Utils.getJSONObjects(emails);
+
+                                    for (Properties props : tmp) {
+                                        String emailString = (String) props.get(Constants.DB_PARTICIPANT_EMAIL_NAME);
+                                        emailStrings.add(emailString);
+                                    }
+
+                                }
+
+                                autoSuggestAdapter.setData(emailStrings);
+                                autoSuggestAdapter.notifyDataSetChanged();
+
+                            } catch (Exception e) {
+                                Log.e(Constants.LOGTAG,"Exception",e);
+                            }
+                        }
+                    };
+
+                    ProgressBar progressBar = findViewById(R.id.pProgressBar);
+                    PostRequest request = new PostRequest(handler,progressBar,Constants.SERVICE_AUTOFILL);
+
+                    Properties postParams = new Properties();
+                    EditText editText = findViewById(R.id.participantEmail);
+                    String prefix = editText.getText().toString();
+                    postParams.put(Constants.REQUEST_PREFIX_NAME,prefix);
+
+                    request.execute(postParams);
+
+                }
+                return false;
+            }
+        });
+    }
+
+    public void jan4OnClick(View view) {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(Register_ws_events.this);
+        mBuilder.setTitle(R.string.jan4_workshops_title);
+        mBuilder.setSingleChoiceItems(jan4WorkshopNames, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                setJan4(position);
+                showChosenEvents();
+            }
+        });
+
+        mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+
+                resetJan4();
+                showChosenEvents();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+
+    }
+
+    public void jan5OnClick(View view) {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(Register_ws_events.this);
+        mBuilder.setTitle(R.string.jan5_workshops_title);
+        mBuilder.setSingleChoiceItems(jan5WorkshopNames, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                setJan5(position);
+                showChosenEvents();
+            }
+        });
+
+        mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+
+                resetJan5();
+                showChosenEvents();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+
+    }
+
+    private void setJan4(int position) {
+
+        jan4SelectedId = jan4WorkshopIds[position];
+        jan4SelectedName = jan4WorkshopNames[position];
+        jan4SelectedPrice = jan4WorkshopPrices[position];
+    }
+
+    private void setJan5(int position) {
+        jan5SelectedId = jan5WorkshopIds[position];
+        jan5SelectedName = jan5WorkshopNames[position];
+        jan5SelectedPrice = jan5WorkshopPrices[position];
+    }
+
+    public void goOnClick(View view) {
+
+        String participantEmail = (String) curParticipant.get(Constants.DB_PARTICIPANT_EMAIL_NAME);
+
+        if (jan4SelectedId == -1 && jan5SelectedId == -1 && !ticket) {
+            Toast.makeText(getApplicationContext(), "No events selected", Toast.LENGTH_LONG).show();
+        } else {
+
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            Properties postParams = new Properties();
+
+            Log.d(Constants.LOGTAG,"WORKSHOPS:" + jan4SelectedName + "," + jan5SelectedName);
+
+            if (jan4SelectedId != -1) {
+                postParams.put(Constants.REQUEST_JAN4_WORKSHOP_ID_NAME,jan4SelectedId+"");
+                Log.d(Constants.LOGTAG,"WORKSHOPID:"+jan4SelectedId);
+            }
+            if (jan5SelectedId != -1) {
+                postParams.put(Constants.REQUEST_JAN5_WORKSHOP_ID_NAME,jan5SelectedId+"");
+                Log.d(Constants.LOGTAG,"WORKSHOPID:"+jan5SelectedId);
+            }
+            if (ticket) {
+                postParams.put(Constants.REQUEST_EVENT_ID_NAME,1);
+                Log.d(Constants.LOGTAG,"EVENTID:1");
+            }
+
+            postParams.put(Constants.REQUEST_ORG_ID_NAME,organizerId);
+            postParams.put(Constants.REQUEST_PARTICIPANT_EMAIL_NAME,participantEmail);
+
+            PostRequest request = new PostRequest(getResponseHandler(),progressBar,Constants.SERVICE_PUT_DETAILS);
+            request.execute(postParams);
+
+            findViewById(R.id.btnGo).setEnabled(false);
+
+        }
+    }
+
+    private PostResponseHandler getResponseHandler() {
+
+        return new PostResponseHandler() {
+            @Override
+            public void handlePostResponse(String response) {
+
+                try {
+
+                    Properties responseObj = Utils.getJSONObject(new JSONObject(response));
+
+                    String message = (String)responseObj.get(Constants.RESPONSE_MESSAGE_NAME);
+                    String status = (String)responseObj.get(Constants.RESPONSE_STATUS_NAME);
+
+                    if (Constants.RESPONSE_SUCCESS_VALUE.equals(status)) {
+                        if (jan4SelectedId != -1) findViewById(R.id.btnJan4).setEnabled(false);
+                        if (jan5SelectedId != -1) findViewById(R.id.btnJan5).setEnabled(false);
+                        if (ticket) findViewById(R.id.ticketCheckBox).setEnabled(false);
+                    }
+
+                    findViewById(R.id.btnGo).setEnabled(true);
+
+                    Toast.makeText(getApplicationContext(),status + "! " + message,Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Log.d(Constants.LOGTAG,"Exception",e);
+                }
+
+                resetVars();
+
+            }
+        };
+    }
+
+
+}

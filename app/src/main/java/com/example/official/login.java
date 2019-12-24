@@ -17,47 +17,25 @@ import java.util.Properties;
 
 public class login extends AppCompatActivity implements PostResponseHandler {
 
-    Button login;
-    EditText username,pin;
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login = (Button)findViewById(R.id.login);
-        username = (EditText)findViewById(R.id.username);
-        pin = (EditText)findViewById(R.id.pin);
-        /*
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                authenticate(username.toString(),pin.toString());
-            }
-        });*/
+
     }
 
 
     public void authenticate(View view) {
 
-
-        /*
-        if(username.equalsIgnoreCase("Jayaram") ) {
-            if (pin.equalsIgnoreCase("podapunda")) {
-                startActivity(new Intent(getApplicationContext(), organiser.class));
-
-            }
-        }
-        else{
-
-            System.out.println("wrong credentials");
-        }*/
-
-
         ProgressBar progressBar = findViewById(R.id.progressBar);
         PostRequest request = new PostRequest(this,progressBar,Constants.SERVICE_CHECK_LOGIN);
 
-        String usernameString = this.username.getText().toString();
-        String passwordString = this.pin.getText().toString();
+        EditText editText = findViewById(R.id.username);
+        String usernameString = editText.getText().toString();
+
+        editText = findViewById(R.id.pin);
+        String passwordString = editText.getText().toString();
 
         Properties postParams = new Properties();
         postParams.put(Constants.REQUEST_USERNAME_NAME,usernameString);
@@ -69,34 +47,44 @@ public class login extends AppCompatActivity implements PostResponseHandler {
 
     public void handlePostResponse(String jsonResponse) {
 
-        String message = "";
+        Log.d(Constants.LOGTAG,"JSONRESPONSE:"+jsonResponse);
+
+        String status = null;
         Properties response = null;
+        String message = null;
 
 
+        if (jsonResponse.length() > 0) {
 
-        try {
-            response = Utils.getJSONObject(new JSONObject(jsonResponse));
-            message = response.get(Constants.RESPONSE_STATUS_NAME).toString();
+            try {
+                response = Utils.getJSONObject(new JSONObject(jsonResponse));
+                status = (String)response.get(Constants.RESPONSE_STATUS_NAME);
+                message = (String)response.get(Constants.RESPONSE_MESSAGE_NAME);
 
-        } catch (Exception e) {
-            Log.e(Constants.LOGTAG,"Exception",e);
-        }
+            } catch (Exception e) {
+                Log.e(Constants.LOGTAG,"Exception",e);
+            }
 
-        if (Constants.RESPONSE_SUCCESS_VALUE.equals(message)) {
+            if (Constants.RESPONSE_SUCCESS_VALUE.equals(status)) {
 
-            Intent intent = new Intent(getApplicationContext(),organiser.class);
+                Intent intent = new Intent(getApplicationContext(), organiser.class);
 
-            int access = Integer.parseInt(response.get(Constants.RESPONSE_ORG_ACCESS_NAME).toString());
-            intent.putExtra(Constants.INTENT_ORG_ACCESS_NAME,access);
+                int access = Integer.parseInt((String)response.get(Constants.RESPONSE_ORG_ACCESS_NAME));
+                intent.putExtra(Constants.INTENT_ORG_ACCESS_NAME, access);
 
-            int organizerId = Integer.parseInt(response.get(Constants.RESPONSE_ORG_ID_NAME).toString());
-            intent.putExtra(Constants.INTENT_ORG_ID_NAME,organizerId);
+                int organizerId = Integer.parseInt((String)response.get(Constants.RESPONSE_ORG_ID_NAME));
+                intent.putExtra(Constants.INTENT_ORG_ID_NAME, organizerId);
 
-            startActivity(intent);
+                startActivity(intent);
+
+            } else {
+
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+            }
 
         } else {
 
-            Toast.makeText(getApplicationContext(),"Invalid username or password",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Failed to connect to server :(",Toast.LENGTH_LONG).show();
         }
     }
 }

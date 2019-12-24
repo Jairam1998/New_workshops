@@ -10,11 +10,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
     <ImageView
         android:background="@drawable/background_gradient"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="720dp" />
+
+
     <ImageView
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -27,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:visibility="invisible" />
+
 
     </LinearLayout>
 
@@ -49,59 +54,84 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="100">
 
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/participantEmail"
+                android:layout_width="0dp"
+                android:layout_weight="85"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+
+            <!--
             <EditText
                 android:id="@+id/username"
                 android:layout_width="286dp"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_person"
-                android:drawablePadding="20dp" />
+                android:drawablePadding="20dp" /> -->
 
 
             <ProgressBar
                 android:id="@+id/pProgressBar"
                 style="?android:attr/progressBarStyle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
+                android:layout_weight="15"
+                android:layout_marginVertical="5dp"
                 android:visibility="invisible" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/participantExists"
+            android:id="@+id/participantDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
 
+
+
         <Button
-            android:id="@+id/btnOrder4"
+            android:id="@+id/btnJan4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/rec_gradient"
+            android:onClick="jan4OnClick"
             android:text="Workshops on Jan 4" />
 
 
         <Button
-            android:id="@+id/btnOrder5"
+            android:id="@+id/btnJan5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/rec_gradient"
+            android:onClick="jan5OnClick"
             android:text="Workshops on Jan 5" />
 
-        <Button
+        <CheckBox
+            android:id="@+id/ticketCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Event Ticket"
+            android:layout_marginTop="15dp"/>
+
+        <!-- <Button
             android:id="@+id/btnEvents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +139,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/rec_gradient"
-            android:text="Events" />
+            android:text="Events" /> -->
 
 
         <TextView
@@ -131,7 +161,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:background="@drawable/rec_gradient"
-            android:onClick="btnGO"
+            android:onClick="goOnClick"
             android:text="Go" />
 
     </LinearLayout>

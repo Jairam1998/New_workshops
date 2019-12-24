@@ -13,18 +13,15 @@
     <integer name="events_date">29</integer>
 
     <string-array name="jan4_workshop_names">
-        <item>Free Placement Training Workshop</item>
         <item>Machine Learning by Google Developers</item>
         <item>Workshop on Python and Web Development</item>
         <item>Ethical Hacking by ZOHO</item>
         <item>UAV drone workshop</item>
         <item>Workshop on Hybrid and Electrical Vehicles</item>
         <item>Workshop on Autotronics</item>
-        <item>None</item>
     </string-array>
 
     <integer-array name="jan4_workshop_ids">
-        <item>0</item>
         <item>2</item>
         <item>4</item>
         <item>6</item>
@@ -34,13 +31,12 @@
     </integer-array>
 
     <integer-array name="jan4_workshop_prices">
-        <item>0</item>
-        <item>930</item>
-        <item>826</item>
-        <item>826</item>
-        <item>620</item>
-        <item>723</item>
-        <item>723</item>
+        <item>900</item>
+        <item>800</item>
+        <item>800</item>
+        <item>600</item>
+        <item>700</item>
+        <item>70</item>
     </integer-array>
 
 
@@ -59,10 +55,10 @@
     </integer-array>
 
     <integer-array name="jan5_workshop_prices">
-        <item>826</item>
-        <item>930</item>
-        <item>826</item>
-        <item>723</item>
+        <item>800</item>
+        <item>900</item>
+        <item>800</item>
+        <item>700</item>
     </integer-array>
 
     <integer-array name="event_ids">

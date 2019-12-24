@@ -51,6 +51,7 @@ public class organiser extends AppCompatActivity {
     public void scanQR(View view) {
 
         Intent intent = new Intent(getApplicationContext(),scan_code_actual.class);
+        intent.putExtra(Constants.INTENT_MESSAGE_NAME,"Scan ID Card or workshop ticket");
         startActivityForResult(intent,1);
 
     }
@@ -66,9 +67,6 @@ public class organiser extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
 
                 String id = data.getStringExtra(Constants.INTENT_QR_CODE_NAME);
-
-                //TODO remove this line once actual QR codes are available
-                //id = "CBW7282756";
 
                 Log.d(Constants.LOGTAG,"SCANNED:"+id);
 
@@ -144,5 +142,6 @@ public class organiser extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 }

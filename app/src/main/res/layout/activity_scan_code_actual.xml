@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".scan_code_actual">
+    tools:context=".scan_code_actual"
+    android:orientation="vertical"
+    android:weightSum="100">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:id="@+id/scan_view">
+    </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+    <EditText
+        android:id="@+id/code"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:drawableRight="@drawable/ic_person"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/scan_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/rec_gradient"
+        android:onClick="btnDone"
+        android:text="Go"
+        android:textAllCaps="false"
+        android:textColor="#FFF" />
+
+
+
+
+
+</FrameLayout>

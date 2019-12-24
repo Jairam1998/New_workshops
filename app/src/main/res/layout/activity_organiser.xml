@@ -57,18 +57,19 @@
         android:layout_height="60dp" />
 
     <Button
-        android:textColor="#FFF"
-        android:background="@drawable/rec_gradient"
-        android:layout_marginTop="400dp"
-        android:textAllCaps="false"
-        android:onClick="scanQR"
-        android:text="SCAN QR"
         android:id="@+id/org_scan"
         android:layout_width="300dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="315dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="220dp"
-        android:layout_height="60dp" />
+        android:background="@drawable/rec_gradient"
+        android:onClick="scanQR"
+        android:text="Scan QR"
+        android:textAllCaps="false"
+        android:textColor="#FFF" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
