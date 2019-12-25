@@ -38,7 +38,7 @@ public class Register_ws_events extends AppCompatActivity {
     private int selectedJan4WorkshopId, selectedJan5WorkshopId;
     private String selectedJan4WorkshopName, selectedJan5WorkshopName;
     private int selectedJan4WorkshopPrice, selectedJan5WorkshopPrice;
-    private boolean ticket;
+    private boolean ticket, ticketOnline, ticketReceived;
     private int selectedCount;
 
     private int organizerId;
@@ -93,7 +93,7 @@ public class Register_ws_events extends AppCompatActivity {
     private void enableOrDisableGo(int d) {
         selectedCount += d;
         Log.d(Constants.LOGTAG,"BEFORE:" + (selectedCount-d) + " AFTER:"+selectedCount);
-        if (selectedCount == 0) disableGo();
+        if (selectedCount == 0 && (!ticketOnline || ticketReceived)) disableGo();
         else enableGo();
     }
 
@@ -113,12 +113,17 @@ public class Register_ws_events extends AppCompatActivity {
     private void reset() {
 
         ticket = false;
+        ticketOnline = false;
         selectedCount = 0;
+
         resetJan4Vars();
         resetJan5Vars();
 
         CheckBox checkBox = findViewById(R.id.ticketCheckBox);
         checkBox.setChecked(false);
+
+        TextView textView = findViewById(R.id.participantDetails);
+        textView.setText("");
 
         showChosenEvents();
     }
@@ -224,9 +229,14 @@ public class Register_ws_events extends AppCompatActivity {
                             String participantDetailsJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_DETAILS_NAME);
                             String eventListJson = (String)obj.get(Constants.RESPONSE_EVENT_LIST_NAME);
 
+                            reset();
                             showParticipantDetails(participantDetailsJson);
                             enableUnregisteredEvents(eventListJson);
-                            reset();
+
+                            ticketReceived = Boolean.parseBoolean((String)obj.get(Constants.RESPONSE_TICKET_RECEIVED_NAME));
+                            enableOrDisableGo(0);
+
+                            showChosenEvents();
 
                         } catch (Exception e) {
                             Log.e(Constants.LOGTAG,"Exception",e);
@@ -252,8 +262,7 @@ public class Register_ws_events extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 findViewById(R.id.btnGo).setEnabled(false);
                 handler.removeMessages(TRIGGER_AUTO_COMPLETE);
-                handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
-                        AUTO_COMPLETE_DELAY);
+                handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE, AUTO_COMPLETE_DELAY);
                 curParticipant = null;
                 disableAll();
                 reset();
@@ -288,7 +297,11 @@ public class Register_ws_events extends AppCompatActivity {
 
             String dateString = (String)event.get(Constants.DB_EVENT_DATE_NAME);
             int day = Integer.parseInt(dateString.substring(0,2));
-            if (Constants.ROLLING_EVENT_DATE_VALUE == day) findViewById(R.id.ticketCheckBox).setEnabled(false);
+            if (Constants.ROLLING_EVENT_DATE_VALUE == day) {
+                findViewById(R.id.ticketCheckBox).setEnabled(false);
+                ticketOnline = true;
+                enableOrDisableGo(0);
+            }
             else if (day == 4) findViewById(R.id.btnJan4).setEnabled(false);
             else if (day == 5) findViewById(R.id.btnJan5).setEnabled(false);
         }
@@ -375,8 +388,11 @@ public class Register_ws_events extends AppCompatActivity {
             int price;
             if ("MIT".equals(college)) price = 150;
             else price = 250;
-            tmp += price + ")\n";
             sum += price;
+            tmp += price + ")\n";
+        }
+        if (ticketOnline) {
+            tmp += "Event Ticket (paid)\n";
         }
 
         if (tmp.length() > 0) {
@@ -431,6 +447,7 @@ public class Register_ws_events extends AppCompatActivity {
                 Properties postParams = getWorkshopIdPostParams();
                 String ticketId = data.getStringExtra(Constants.INTENT_QR_CODE_NAME);
                 postParams.put(Constants.REQUEST_TICKET_ID_NAME,ticketId);
+                postParams.put(Constants.REQUEST_TICKET_ONLINE_NAME,ticketOnline);
                 sendRequest(postParams);
             }
         }
@@ -438,7 +455,7 @@ public class Register_ws_events extends AppCompatActivity {
 
     public void goOnClick(View view) {
 
-        if (ticket) {
+        if (ticket || (ticketOnline && !ticketReceived)) {
 
             Intent intent = new Intent(getApplicationContext(),scan_code_actual.class);
             intent.putExtra(Constants.INTENT_MESSAGE_NAME,"Scan new ID-card");
@@ -468,6 +485,8 @@ public class Register_ws_events extends AppCompatActivity {
         return new PostResponseHandler() {
             @Override
             public void handlePostResponse(String response) {
+
+                Log.d(Constants.LOGTAG,"JSON:"+response);
 
                 try {
 

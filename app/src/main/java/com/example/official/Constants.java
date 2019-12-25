@@ -45,6 +45,7 @@ public class Constants {
     public static final String REQUEST_PARTICIPANT_ID_NAME = "participantId";
     public static final String REQUEST_PARTICIPANT_EMAIL_NAME = "participantEmail";
     public static final String REQUEST_PREFIX_NAME = "prefix";
+    public static final String REQUEST_TICKET_ONLINE_NAME = "ticketOnline";
 
     public static final String RESPONSE_STATUS_NAME = "status";
     public static final String RESPONSE_MESSAGE_NAME = "message";
@@ -55,6 +56,7 @@ public class Constants {
     public static final String RESPONSE_WORKSHOP_DETAILS_NAME = "workshop";
     public static final String RESPONSE_PARTICIPANT_LIST_NAME = "participantsList";
     public static final String RESPONSE_DATA_NAME = "data";
+    public static final String RESPONSE_TICKET_RECEIVED_NAME = "ticketReceived";
 
     public static final String RESPONSE_SUCCESS_VALUE = "SUCCESS";
     public static final String RESPONSE_FAILURE_VALUE = "FAILURE";
