@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".scan_code_actual"
-    android:orientation="vertical"
-    android:weightSum="100">
+    android:orientation="vertical">
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="60"
         android:id="@+id/scan_view">
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
 

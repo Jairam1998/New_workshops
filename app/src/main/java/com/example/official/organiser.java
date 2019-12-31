@@ -19,7 +19,7 @@ import java.util.Properties;
 public class organiser extends AppCompatActivity {
 
 
-    Button register,scan;
+    Button register,scan,upload;
     static TextView textView;
 
     private int organizerId, access;
@@ -30,9 +30,11 @@ public class organiser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organiser);
 
-        register = (Button)findViewById(R.id.org_register);
-        scan = (Button)findViewById(R.id.org_scan);
-        textView = (TextView)findViewById(R.id.org_result_text);
+        register = findViewById(R.id.org_register);
+        scan = findViewById(R.id.org_scan);
+        upload = findViewById(R.id.org_upload_scores);
+
+        textView = findViewById(R.id.org_result_text);
 
         organizerId = getIntent().getIntExtra(Constants.INTENT_ORG_ID_NAME,-1);
         access = getIntent().getIntExtra(Constants.INTENT_ORG_ACCESS_NAME,-1);
@@ -42,6 +44,7 @@ public class organiser extends AppCompatActivity {
         if (access == 0) {
             Toast.makeText(getApplicationContext(),"Logged in as a volunteer",Toast.LENGTH_LONG).show();
             register.setVisibility(View.INVISIBLE);
+            upload.setVisibility(View.INVISIBLE);
         }
         else Toast.makeText(getApplicationContext(),"Logged in as an organizer",Toast.LENGTH_LONG).show();
 
@@ -101,7 +104,7 @@ public class organiser extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),EventsViewActivity.class);
 
                             String workshopsListJson = (String)obj.get(Constants.RESPONSE_EVENT_LIST_NAME);
-                            intent.putExtra(Constants.INTENT_WORKSHOP_LIST_NAME,workshopsListJson);
+                            intent.putExtra(Constants.INTENT_EVENT_LIST_NAME,workshopsListJson);
                             Log.d(Constants.LOGTAG,workshopsListJson);
 
                             String participantDetailsJson = (String)obj.get(Constants.RESPONSE_PARTICIPANT_DETAILS_NAME);
@@ -141,6 +144,12 @@ public class organiser extends AppCompatActivity {
         intent.putExtra(Constants.INTENT_ORG_ID_NAME,organizerId);
         startActivity(intent);
 
+    }
+
+    public void upload(View view) {
+
+        Intent intent = new Intent(getApplicationContext(),UploadScoresActivity.class);
+        startActivity(intent);
     }
 
 

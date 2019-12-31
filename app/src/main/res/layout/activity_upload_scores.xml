@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UploadScoresActivity"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="75"
+        android:id="@+id/frameLayout">
+
+        <me.dm7.barcodescanner.zxing.ZXingScannerView
+            android:id="@+id/scan_qr_upload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+        <ProgressBar
+            android:id="@+id/uProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:visibility="invisible" />
+
+    </FrameLayout>
+
+
+    <EditText
+        android:id="@+id/scanned_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:drawableRight="@drawable/ic_person"
+        android:drawablePadding="20dp"
+        android:hint="Ticket ID"
+        android:textAlignment="center"/>
+
+
+    <EditText
+        android:id="@+id/scoreEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:drawableRight="@drawable/ic_person"
+        android:drawablePadding="20dp"
+        android:hint="Score"
+        android:textAlignment="center"/>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="5dp">
+
+        <RadioButton
+            android:id="@+id/event1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_results_event1"
+            android:layout_gravity="center"
+            android:layout_margin="2dp" />
+
+        <RadioButton
+            android:id="@+id/event2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_results_event2"
+            android:layout_gravity="center"
+            android:layout_margin="2dp" />
+
+        <RadioButton
+            android:id="@+id/event3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_results_event3"
+            android:layout_gravity="center"
+            android:layout_margin="2dp" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rec_gradient"
+        android:text="Go"
+        android:onClick="btnUpload"
+        android:textAllCaps="false"
+        android:textColor="#FFF"
+        android:padding="2dp" />
+
+
+
+</LinearLayout>

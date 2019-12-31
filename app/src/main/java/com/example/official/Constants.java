@@ -19,7 +19,7 @@ public class Constants {
     public static final String DB_PARTICIPANT_EMAIL_NAME = "Email";
 
     public static final String INTENT_PARTICIPANT_DETAILS_NAME = "participantDetailsJson";
-    public static final String INTENT_WORKSHOP_LIST_NAME = "workshopListJson";
+    public static final String INTENT_EVENT_LIST_NAME = "workshopListJson";
     public static final String INTENT_WORKSHOP_DETAILS_NAME = "workshopDetailsJson";
     public static final String INTENT_PARTICIPANT_LIST_NAME = "participantListJson";
     public static final String INTENT_ORG_ACCESS_NAME = "access";
@@ -27,14 +27,17 @@ public class Constants {
     public static final String INTENT_QR_CODE_NAME = "qrCode";
     public static final String INTENT_MESSAGE_NAME = "message";
 
-    //public static final String SERVICE_BASE = "http://cb.csmit.org/apk/";
-    public static final String SERVICE_BASE = "http://192.168.0.106/";
+    public static final String SERVICE_BASE = "http://cb.csmit.org/apk/";
+    //public static final String SERVICE_BASE = "http://192.168.0.106/";
     public static final String SERVICE_GET_DETAILS = "getDetails.php";
     public static final String SERVICE_CHECK_LOGIN = "checkLogin.php";
     public static final String SERVICE_PUT_DETAILS = "putDetails.php";
     public static final String SERVICE_AUTOFILL = "autofill.php";
     public static final String SERVICE_GET_WORKSHOP_DETAILS = "getWorkshopDetails.php";
+    public static final String SERVICE_UPLOAD_SCORE = "uploadScore.php";
 
+    public static final String REQUEST_EVENT_ID_NAME = "eventId";
+    public static final String REQUEST_SCORE_NAME = "score";
     public static final String REQUEST_USERNAME_NAME = "user";
     public static final String REQUEST_PASSWORD_NAME = "pass";
     public static final String REQUEST_ID_NAME = "id";
@@ -63,5 +66,6 @@ public class Constants {
     public static final String RESPONSE_NULL_VALUE = "null";
 
     public static final int ROLLING_EVENT_DATE_VALUE = 29;
+    public static final int CAMERA_PERMISSION_REQUEST = 7919;
 
 }

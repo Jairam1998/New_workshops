@@ -71,4 +71,8 @@
         <item>Paper Presentation</item>
     </string-array>
 
+    <string name="upload_results_event1">Hunt the Code</string>
+    <string name="upload_results_event2">Numpi</string>
+    <string name="upload_results_event3">Code Surf</string>
+
 </resources>

@@ -24,60 +24,98 @@ public class EventsViewActivity extends AppCompatActivity {
 
         String participantJsonString = getIntent().getStringExtra(Constants.INTENT_PARTICIPANT_DETAILS_NAME);
         Log.d(Constants.LOGTAG,participantJsonString);
-        showParticipantDetails(participantJsonString);
+        Log.d(Constants.LOGTAG,"PARTICIPANTJSON:"+participantJsonString);
+        boolean flag = showParticipantDetails(participantJsonString);
 
-        String workshopsJsonString = getIntent().getStringExtra(Constants.INTENT_WORKSHOP_LIST_NAME);
-        Log.d(Constants.LOGTAG,workshopsJsonString);
-        showEventsList(workshopsJsonString);
+        if (flag) {
+
+            String eventsJsonString = getIntent().getStringExtra(Constants.INTENT_EVENT_LIST_NAME);
+            Log.d(Constants.LOGTAG, eventsJsonString);
+            Log.d(Constants.LOGTAG, "EVENTSJSON:" + eventsJsonString);
+            showEventsList(eventsJsonString);
+        }
 
     }
 
-    private void showParticipantDetails(String jsonString) {
+    private boolean showParticipantDetails(String jsonString) {
 
-        Properties participant = null;
+        Properties participant;
 
         Log.d(Constants.LOGTAG,"JSONString: " + jsonString);
 
         try {
 
-            participant = Utils.getJSONObject(new JSONObject(jsonString));
+            if (Constants.RESPONSE_NULL_VALUE.equals(jsonString)) invalidId();
+            else {
 
-            View parentView = findViewById(R.id.participantDetails);
+                participant = Utils.getJSONObject(new JSONObject(jsonString));
 
-            String name = participant.get(Constants.DB_PARTICIPANT_NAME_NAME).toString();
-            TextView nameView = parentView.findViewById(R.id.name);
-            nameView.setText(name);
+                if (participant.size() > 0) {
 
-            String college = participant.get(Constants.DB_PARTICIPANT_COLLEGE_NAME).toString();
-            TextView collegeView = parentView.findViewById(R.id.college);
-            collegeView.setText(college);
+                    View parentView = findViewById(R.id.participantDetails);
 
-            String email = participant.get(Constants.DB_PARTICIPANT_EMAIL_NAME).toString();
-            TextView emailView = parentView.findViewById(R.id.email);
-            emailView.setText(email);
+                    String name = participant.get(Constants.DB_PARTICIPANT_NAME_NAME).toString();
+                    TextView nameView = parentView.findViewById(R.id.name);
+                    nameView.setText(name);
+
+                    String college = participant.get(Constants.DB_PARTICIPANT_COLLEGE_NAME).toString();
+                    TextView collegeView = parentView.findViewById(R.id.college);
+                    collegeView.setText(college);
+
+                    String email = participant.get(Constants.DB_PARTICIPANT_EMAIL_NAME).toString();
+                    TextView emailView = parentView.findViewById(R.id.email);
+                    emailView.setText(email);
+
+                    return true;
+
+                } else {
+
+                    invalidId();
+
+                }
+            }
 
 
         } catch (Exception e) {
-            Log.e("CarteBlanche","Exception",e);
+            Log.e(Constants.LOGTAG,"Exception",e);
         }
 
+        return false;
+
+    }
+
+    private void invalidId() {
+
+        View parentView = findViewById(R.id.participantDetails);
+
+        TextView nameView = parentView.findViewById(R.id.name);
+        nameView.setText("Invalid ID given");
+        ((TextView)parentView.findViewById(R.id.college)).setText("");
+        ((TextView)parentView.findViewById(R.id.email)).setText("");
     }
 
     private void showEventsList(String jsonString) {
 
         Log.d(Constants.LOGTAG,"JSONString: " + jsonString);
 
-        List <EventListItem> workshopsList = null;
+        List <EventListItem> eventsList = null;
 
         try {
-            workshopsList = getEventsList(jsonString);
+            eventsList = getEventsList(jsonString);
         } catch (Exception e) {
-            Log.e("CarteBlanche","Exception",e);
+            Log.e(Constants.LOGTAG,"Exception",e);
         }
 
-        EventsListAdapter workshopsListAdapter = new EventsListAdapter(this,R.layout.workshop_list_item,workshopsList);
-        ListView workshopsListView = findViewById(R.id.workshopsListView);
-        workshopsListView.setAdapter(workshopsListAdapter);
+        if (eventsList.size() == 0) {
+
+            findViewById(R.id.no_events_registered).setVisibility(View.VISIBLE);
+
+        } else {
+
+            EventsListAdapter eventsListAdapter = new EventsListAdapter(this, R.layout.workshop_list_item, eventsList);
+            ListView workshopsListView = findViewById(R.id.workshopsListView);
+            workshopsListView.setAdapter(eventsListAdapter);
+        }
     }
 
     private List<EventListItem> getEventsList(String jsonString) throws Exception {
